@@ -9,8 +9,8 @@
       :root {
         color-scheme: light;
         font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-        background: #edf4f8;
-        color: #17324d;
+        background: #0f0f15;
+        color: #fff;
       }
 
       * { box-sizing: border-box; }
@@ -20,8 +20,8 @@
         min-height: 100vh;
         margin: 0;
         background:
-          radial-gradient(circle at 10% 10%, rgba(255,255,255,.85), transparent 36%),
-          linear-gradient(135deg, #e9f4f7 0%, #f7fafb 48%, #dbeaf0 100%);
+          radial-gradient(circle at 50% 0%, rgba(227, 6, 19, .16), transparent 34rem),
+          #0f0f15;
       }
 
       button, input { font: inherit; }
@@ -35,46 +35,33 @@
 
       .login-card {
         width: 100%;
-        max-width: 27rem;
+        max-width: 32rem;
         padding: clamp(1.5rem, 5vw, 2.5rem);
-        border: 1px solid rgba(255,255,255,.9);
+        border: 1px solid rgba(255,255,255,.1);
         border-radius: 1.5rem;
-        background: rgba(255,255,255,.88);
-        box-shadow: 0 1.5rem 4rem rgba(27, 64, 89, .14);
+        background: #0f0f15;
+        box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, .42), 0 0 4rem rgba(227, 6, 19, .08);
         backdrop-filter: blur(1rem);
       }
 
-      .brand {
-        display: inline-flex;
-        align-items: center;
-        gap: .75rem;
-        margin-bottom: 2rem;
-        color: #0f766e;
-        font-weight: 800;
-        letter-spacing: .02em;
-      }
-
-      .brand-mark {
-        display: grid;
-        width: 2.75rem;
-        height: 2.75rem;
-        place-items: center;
-        border-radius: .85rem;
-        color: #fff;
-        background: linear-gradient(145deg, #14b8a6, #0f766e);
-        box-shadow: 0 .5rem 1rem rgba(15, 118, 110, .24);
+      .logo {
+        display: block;
+        width: 100%;
+        max-width: 24rem;
+        margin: 0 auto 1.75rem;
+        border-radius: .5rem;
       }
 
       h1 {
         margin: 0;
-        color: #102a43;
+        color: #fff;
         font-size: clamp(1.75rem, 6vw, 2.25rem);
         line-height: 1.1;
       }
 
       .subtitle {
         margin: .75rem 0 1.75rem;
-        color: #526b7d;
+        color: #b8b8c2;
         font-size: 1rem;
         line-height: 1.5;
       }
@@ -82,7 +69,7 @@
       .field { display: grid; gap: .5rem; margin-bottom: 1rem; }
 
       label {
-        color: #29465f;
+        color: #fff;
         font-size: .9rem;
         font-weight: 700;
       }
@@ -91,17 +78,17 @@
         width: 100%;
         min-height: 3rem;
         padding: .75rem .9rem;
-        border: 1px solid #c7d8e1;
+        border: 1px solid #41414d;
         border-radius: .75rem;
-        color: #17324d;
-        background: #fff;
+        color: #fff;
+        background: #20202a;
         outline: none;
         transition: border-color .2s, box-shadow .2s;
       }
 
       input:focus {
-        border-color: #0f766e;
-        box-shadow: 0 0 0 .2rem rgba(20, 184, 166, .16);
+        border-color: #e30613;
+        box-shadow: 0 0 0 .2rem rgba(227, 6, 19, .18);
       }
 
       .submit {
@@ -112,26 +99,27 @@
         border: 0;
         border-radius: .75rem;
         color: #fff;
-        background: #0f766e;
+        background: #e30613;
         cursor: pointer;
         font-weight: 800;
         transition: transform .2s, background .2s;
       }
 
-      .submit:hover { background: #0b5f59; transform: translateY(-1px); }
-      .submit:focus-visible, .logout:focus-visible { outline: 3px solid rgba(20, 184, 166, .45); outline-offset: 3px; }
+      .submit:hover { background: #bd0510; transform: translateY(-1px); }
+      .submit:disabled { cursor: wait; opacity: .72; transform: none; }
+      .submit:focus-visible, .logout:focus-visible { outline: 3px solid rgba(227, 6, 19, .42); outline-offset: 3px; }
 
       .error {
         min-height: 1.5rem;
         margin: .75rem 0 0;
-        color: #b42318;
+        color: #ff6b73;
         font-size: .875rem;
         line-height: 1.4;
       }
 
       .helper {
         margin: 1.5rem 0 0;
-        color: #738899;
+        color: #8f8f9a;
         font-size: .8125rem;
         line-height: 1.45;
         text-align: center;
@@ -142,7 +130,7 @@
         inset: 0;
         display: flex;
         flex-direction: column;
-        background: #f7fafb;
+        background: #0f0f15;
       }
 
       .chat-shell[hidden], .page[hidden] { display: none; }
@@ -154,22 +142,22 @@
         gap: 1rem;
         min-height: 4rem;
         padding: .75rem 1rem;
-        border-bottom: 1px solid #d9e5eb;
-        background: rgba(255,255,255,.92);
+        border-bottom: 1px solid rgba(227, 6, 19, .32);
+        background: #15151d;
       }
 
       .chat-title { display: grid; gap: .15rem; }
-      .chat-title strong { color: #102a43; }
-      .chat-title span { color: #668091; font-size: .8125rem; }
+      .chat-title strong { color: #fff; }
+      .chat-title span { color: #b8b8c2; font-size: .8125rem; }
 
       .logout {
         min-width: 4.5rem;
         min-height: 2.75rem;
         padding: .5rem .75rem;
-        border: 1px solid #c7d8e1;
+        border: 1px solid #e30613;
         border-radius: .65rem;
-        color: #29465f;
-        background: #fff;
+        color: #fff;
+        background: transparent;
         cursor: pointer;
         font-size: .875rem;
         font-weight: 700;
@@ -189,10 +177,7 @@
   <body>
     <main id="login-page" class="page">
       <section class="login-card" aria-labelledby="login-title">
-        <div class="brand" aria-label="Mentor IA">
-          <span class="brand-mark" aria-hidden="true">✦</span>
-          <span>Mentor IA</span>
-        </div>
+        <img class="logo" src="./assets/caf-logo.png" alt="CAF Máquinas" />
 
         <h1 id="login-title">Acesse seu mentor</h1>
         <p class="subtitle">Entre com seu usuário e senha para iniciar a conversa.</p>
