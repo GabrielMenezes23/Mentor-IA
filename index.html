@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#102a43" />
+    <meta name="theme-color" content="#0f0f15" />
     <title>Mentor IA | Acesso</title>
     <style>
       :root {
@@ -41,7 +41,6 @@
         border-radius: 1.5rem;
         background: #0f0f15;
         box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, .42), 0 0 4rem rgba(227, 6, 19, .08);
-        backdrop-filter: blur(1rem);
       }
 
       .logo {
@@ -82,7 +81,6 @@
         color: #fff;
         background: #20202a;
         outline: none;
-        transition: border-color .2s, box-shadow .2s;
       }
 
       input:focus {
@@ -101,11 +99,9 @@
         background: #e30613;
         cursor: pointer;
         font-weight: 800;
-        transition: transform .2s, background .2s;
       }
 
-      .submit:hover { background: #bd0510; transform: translateY(-1px); }
-      .submit:disabled { cursor: wait; opacity: .72; transform: none; }
+      .submit:disabled { cursor: wait; opacity: .72; }
       .submit:focus-visible, .logout:focus-visible { outline: 3px solid rgba(227, 6, 19, .42); outline-offset: 3px; }
 
       .error {
@@ -127,49 +123,35 @@
       .chat-shell {
         position: fixed;
         inset: 0;
-        display: flex;
-        flex-direction: column;
         background: #0f0f15;
       }
 
       .chat-shell[hidden], .page[hidden] { display: none; }
 
-      .chat-header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 1rem;
-        min-height: 4rem;
-        padding: .75rem 1rem;
-        border-bottom: 1px solid rgba(227, 6, 19, .32);
-        background: #15151d;
+      .chat-frame {
+        display: block;
+        width: 100%;
+        height: 100%;
+        border: 0;
+        background: #fff;
       }
 
-      .chat-title { display: grid; gap: .15rem; }
-      .chat-title strong { color: #fff; }
-      .chat-title span { color: #b8b8c2; font-size: .8125rem; }
-
       .logout {
-        min-width: 4.5rem;
-        min-height: 2.75rem;
+        position: fixed;
+        z-index: 1;
+        top: max(1rem, env(safe-area-inset-top));
+        right: max(1rem, env(safe-area-inset-right));
+        min-width: 3rem;
+        min-height: 3rem;
         padding: .5rem .75rem;
         border: 1px solid #e30613;
         border-radius: .65rem;
         color: #fff;
-        background: transparent;
+        background: rgba(15, 15, 21, .9);
+        box-shadow: 0 .5rem 1.5rem rgba(0, 0, 0, .3);
         cursor: pointer;
         font-size: .875rem;
         font-weight: 700;
-      }
-
-      #mentor-widget {
-        flex: 1;
-        min-height: 0;
-      }
-
-      @media (min-width: 48rem) {
-        .page { padding: 2rem; }
-        .chat-header { padding-inline: 2rem; }
       }
     </style>
   </head>
@@ -177,66 +159,49 @@
     <main id="login-page" class="page">
       <section class="login-card" aria-labelledby="login-title">
         <img class="logo" src="./assets/caf-logo.png" alt="CAF Máquinas" />
-
         <h1 id="login-title">Acesse seu mentor</h1>
         <p class="subtitle">Entre com seu usuário e senha para iniciar a conversa.</p>
-
         <form id="login-form" novalidate>
           <div class="field">
             <label for="username">Usuário</label>
             <input id="username" name="username" type="text" autocomplete="username" required autofocus />
           </div>
-
           <div class="field">
             <label for="password">Senha</label>
             <input id="password" name="password" type="password" autocomplete="current-password" required />
           </div>
-
           <button class="submit" type="submit">Entrar</button>
           <p id="login-error" class="error" role="alert" aria-live="polite"></p>
         </form>
-
         <p class="helper">Acesso destinado aos usuários autorizados.</p>
       </section>
     </main>
 
     <section id="chat-page" class="chat-shell" hidden aria-label="Conversa com o Mentor IA">
-      <header class="chat-header">
-        <div class="chat-title">
-          <strong>Mentor IA</strong>
-          <span>Conversa protegida</span>
-        </div>
-        <button id="logout" class="logout" type="button">Sair</button>
-      </header>
-      <div id="mentor-widget"></div>
+      <button id="logout" class="logout" type="button" aria-label="Encerrar sessão">Sair</button>
     </section>
 
     <script>
+      const BOT_URL = "https://widget.meuassistente.rdstationmentoria.com.br/ag/wpc_01KJ8HZB9TBVEGXQ336NQF1WZG/agt_01KQG2PA5724KH19MM6C60M1NA";
       const loginPage = document.getElementById("login-page");
       const chatPage = document.getElementById("chat-page");
       const loginForm = document.getElementById("login-form");
       const loginError = document.getElementById("login-error");
       const submitButton = loginForm.querySelector("button[type=submit]");
 
-      function loadMentorWidget() {
-        if (document.querySelector("script[data-mentor-widget]")) return;
-
-        window.$mw = {
-          workspaceId: "wpc_01KJ8HZB9TBVEGXQ336NQF1WZG",
-          agentId: "agt_01KQG2PA5724KH19MM6C60M1NA"
-        };
-
-        const script = document.createElement("script");
-        script.src = "https://widget.meuassistente.rdstationmentoria.com.br/loader.js";
-        script.defer = true;
-        script.dataset.mentorWidget = "true";
-        document.head.appendChild(script);
-      }
-
       function openChat() {
         loginPage.hidden = true;
         chatPage.hidden = false;
-        loadMentorWidget();
+
+        if (document.getElementById("mentor-frame")) return;
+        const frame = document.createElement("iframe");
+        frame.id = "mentor-frame";
+        frame.className = "chat-frame";
+        frame.title = "Mentor IA";
+        frame.src = BOT_URL;
+        frame.allow = "microphone";
+        frame.allowFullscreen = true;
+        chatPage.prepend(frame);
       }
 
       loginForm.addEventListener("submit", async (event) => {
@@ -256,7 +221,6 @@
           });
 
           if (!response.ok) throw new Error("invalid-credentials");
-          loginError.textContent = "";
           openChat();
         } catch (error) {
           loginError.textContent = "Usuário ou senha inválidos.";
