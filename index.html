@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#102a43" />
+    <title>Mentor IA | Acesso</title>
+    <style>
+      :root {
+        color-scheme: light;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background: #edf4f8;
+        color: #17324d;
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        min-width: 20rem;
+        min-height: 100vh;
+        margin: 0;
+        background:
+          radial-gradient(circle at 10% 10%, rgba(255,255,255,.85), transparent 36%),
+          linear-gradient(135deg, #e9f4f7 0%, #f7fafb 48%, #dbeaf0 100%);
+      }
+
+      button, input { font: inherit; }
+
+      .page {
+        display: grid;
+        min-height: 100vh;
+        place-items: center;
+        padding: 1rem;
+      }
+
+      .login-card {
+        width: 100%;
+        max-width: 27rem;
+        padding: clamp(1.5rem, 5vw, 2.5rem);
+        border: 1px solid rgba(255,255,255,.9);
+        border-radius: 1.5rem;
+        background: rgba(255,255,255,.88);
+        box-shadow: 0 1.5rem 4rem rgba(27, 64, 89, .14);
+        backdrop-filter: blur(1rem);
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: .75rem;
+        margin-bottom: 2rem;
+        color: #0f766e;
+        font-weight: 800;
+        letter-spacing: .02em;
+      }
+
+      .brand-mark {
+        display: grid;
+        width: 2.75rem;
+        height: 2.75rem;
+        place-items: center;
+        border-radius: .85rem;
+        color: #fff;
+        background: linear-gradient(145deg, #14b8a6, #0f766e);
+        box-shadow: 0 .5rem 1rem rgba(15, 118, 110, .24);
+      }
+
+      h1 {
+        margin: 0;
+        color: #102a43;
+        font-size: clamp(1.75rem, 6vw, 2.25rem);
+        line-height: 1.1;
+      }
+
+      .subtitle {
+        margin: .75rem 0 1.75rem;
+        color: #526b7d;
+        font-size: 1rem;
+        line-height: 1.5;
+      }
+
+      .field { display: grid; gap: .5rem; margin-bottom: 1rem; }
+
+      label {
+        color: #29465f;
+        font-size: .9rem;
+        font-weight: 700;
+      }
+
+      input {
+        width: 100%;
+        min-height: 3rem;
+        padding: .75rem .9rem;
+        border: 1px solid #c7d8e1;
+        border-radius: .75rem;
+        color: #17324d;
+        background: #fff;
+        outline: none;
+        transition: border-color .2s, box-shadow .2s;
+      }
+
+      input:focus {
+        border-color: #0f766e;
+        box-shadow: 0 0 0 .2rem rgba(20, 184, 166, .16);
+      }
+
+      .submit {
+        width: 100%;
+        min-height: 3rem;
+        margin-top: .5rem;
+        padding: .75rem 1rem;
+        border: 0;
+        border-radius: .75rem;
+        color: #fff;
+        background: #0f766e;
+        cursor: pointer;
+        font-weight: 800;
+        transition: transform .2s, background .2s;
+      }
+
+      .submit:hover { background: #0b5f59; transform: translateY(-1px); }
+      .submit:focus-visible, .logout:focus-visible { outline: 3px solid rgba(20, 184, 166, .45); outline-offset: 3px; }
+
+      .error {
+        min-height: 1.5rem;
+        margin: .75rem 0 0;
+        color: #b42318;
+        font-size: .875rem;
+        line-height: 1.4;
+      }
+
+      .helper {
+        margin: 1.5rem 0 0;
+        color: #738899;
+        font-size: .8125rem;
+        line-height: 1.45;
+        text-align: center;
+      }
+
+      .chat-shell {
+        position: fixed;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        background: #f7fafb;
+      }
+
+      .chat-shell[hidden], .page[hidden] { display: none; }
+
+      .chat-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        min-height: 4rem;
+        padding: .75rem 1rem;
+        border-bottom: 1px solid #d9e5eb;
+        background: rgba(255,255,255,.92);
+      }
+
+      .chat-title { display: grid; gap: .15rem; }
+      .chat-title strong { color: #102a43; }
+      .chat-title span { color: #668091; font-size: .8125rem; }
+
+      .logout {
+        min-width: 4.5rem;
+        min-height: 2.75rem;
+        padding: .5rem .75rem;
+        border: 1px solid #c7d8e1;
+        border-radius: .65rem;
+        color: #29465f;
+        background: #fff;
+        cursor: pointer;
+        font-size: .875rem;
+        font-weight: 700;
+      }
+
+      #mentor-widget {
+        flex: 1;
+        min-height: 0;
+      }
+
+      @media (min-width: 48rem) {
+        .page { padding: 2rem; }
+        .chat-header { padding-inline: 2rem; }
+      }
+    </style>
+  </head>
+  <body>
+    <main id="login-page" class="page">
+      <section class="login-card" aria-labelledby="login-title">
+        <div class="brand" aria-label="Mentor IA">
+          <span class="brand-mark" aria-hidden="true">✦</span>
+          <span>Mentor IA</span>
+        </div>
+
+        <h1 id="login-title">Acesse seu mentor</h1>
+        <p class="subtitle">Entre com seu usuário e senha para iniciar a conversa.</p>
+
+        <form id="login-form" novalidate>
+          <div class="field">
+            <label for="username">Usuário</label>
+            <input id="username" name="username" type="text" autocomplete="username" required autofocus />
+          </div>
+
+          <div class="field">
+            <label for="password">Senha</label>
+            <input id="password" name="password" type="password" autocomplete="current-password" required />
+          </div>
+
+          <button class="submit" type="submit">Entrar</button>
+          <p id="login-error" class="error" role="alert" aria-live="polite"></p>
+        </form>
+
+        <p class="helper">Acesso destinado aos usuários autorizados.</p>
+      </section>
+    </main>
+
+    <section id="chat-page" class="chat-shell" hidden aria-label="Conversa com o Mentor IA">
+      <header class="chat-header">
+        <div class="chat-title">
+          <strong>Mentor IA</strong>
+          <span>Conversa protegida</span>
+        </div>
+        <button id="logout" class="logout" type="button">Sair</button>
+      </header>
+      <div id="mentor-widget"></div>
+    </section>
+
+    <script>
+      const loginPage = document.getElementById("login-page");
+      const chatPage = document.getElementById("chat-page");
+      const loginForm = document.getElementById("login-form");
+      const loginError = document.getElementById("login-error");
+      const submitButton = loginForm.querySelector("button[type=submit]");
+
+      function loadMentorWidget() {
+        if (document.querySelector("script[data-mentor-widget]")) return;
+
+        window.$mw = {
+          workspaceId: "wpc_01KJ8HZB9TBVEGXQ336NQF1WZG",
+          agentId: "agt_01KQG2PA5724KH19MM6C60M1NA"
+        };
+
+        const script = document.createElement("script");
+        script.src = "https://widget.meuassistente.rdstationmentoria.com.br/loader.js";
+        script.defer = true;
+        script.dataset.mentorWidget = "true";
+        document.head.appendChild(script);
+      }
+
+      function openChat() {
+        loginPage.hidden = true;
+        chatPage.hidden = false;
+        loadMentorWidget();
+      }
+
+      loginForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        const username = document.getElementById("username").value.trim();
+        const password = document.getElementById("password").value;
+
+        submitButton.disabled = true;
+        submitButton.textContent = "Entrando...";
+        loginError.textContent = "";
+
+        try {
+          const response = await fetch("/api/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ username, password })
+          });
+
+          if (!response.ok) throw new Error("invalid-credentials");
+          loginError.textContent = "";
+          openChat();
+        } catch (error) {
+          loginError.textContent = "Usuário ou senha inválidos.";
+        } finally {
+          submitButton.disabled = false;
+          submitButton.textContent = "Entrar";
+        }
+      });
+
+      document.getElementById("logout").addEventListener("click", async () => {
+        await fetch("/api/logout", { method: "POST" });
+        window.location.reload();
+      });
+
+      fetch("/api/session")
+        .then((response) => {
+          if (response.ok) openChat();
+        })
+        .catch(() => undefined);
+    </script>
+  </body>
+</html>
